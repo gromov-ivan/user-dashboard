@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { User } from "./types/User";
+import React from "react";
 import UserList from "./components/UserList/UserList";
+import useUsers from "./hooks/useUsers";
+import styles from "./App.module.scss";
 
 const App: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((response) => response.json())
-      .then((data) => setUsers(data));
-  }, []);
+  const { users, loading, error } = useUsers();
 
   return (
-    <div>
-      <h1>User Dashboard</h1>
-      <UserList users={users} />
+    <div className={styles.dashboard}>
+      <header className={styles.header}>
+        <h1>User Dashboard</h1>
+      </header>
+      <main className={styles.mainContent}>
+        {loading ? (
+          <p className={styles.message}>Loading...</p>
+        ) : error ? (
+          <p className={styles.message}>{error}</p>
+        ) : (
+          <UserList users={users} />
+        )}
+      </main>
     </div>
   );
 };

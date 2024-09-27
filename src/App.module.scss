@@ -1,0 +1,21 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  padding: 20px;
+  text-align: center;
+}
+
+.mainContent {
+  flex: 1;
+  text-align: center;
+}
+
+.message {
+  text-align: center;
+  font-size: 1.2em;
+  color: gray;
+}
