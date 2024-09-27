@@ -14,7 +14,16 @@ const App: React.FC = () => {
 
   const filteredUsers = users.filter((user) => {
     const searchText = filterText.toLowerCase();
-    return user.name.toLowerCase().includes(searchText);
+    return (
+      user.name.toLowerCase().includes(searchText) ||
+      user.email.toLowerCase().includes(searchText) ||
+      user.phone.toLowerCase().includes(searchText) ||
+      user.website.toLowerCase().includes(searchText) ||
+      user.address.street.toLowerCase().includes(searchText) ||
+      user.address.suite.toLowerCase().includes(searchText) ||
+      user.address.city.toLowerCase().includes(searchText) ||
+      user.address.zipcode.toLowerCase().includes(searchText)
+    );
   });
 
   return (
