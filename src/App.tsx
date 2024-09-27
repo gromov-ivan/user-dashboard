@@ -13,6 +13,7 @@ const App: React.FC = () => {
     handleFilterChange,
     handleSortChange,
     toggleSortOrder,
+    resetFilters,
     filteredSortedUsers,
   } = useUserFilters(users);
 
@@ -20,19 +21,23 @@ const App: React.FC = () => {
     <div className={styles.dashboard}>
       <header className={styles.header}>
         <h1>User Dashboard</h1>
+        <p className={styles.subtitle}>
+          Browse and manage the list of users fetched from the API.
+        </p>
       </header>
       <main className={styles.mainContent}>
         <Toolbar
           onFilterChange={handleFilterChange}
           onSortChange={handleSortChange}
           onToggleSortOrder={toggleSortOrder}
+          resetFilters={resetFilters}
           sortField={sortField}
           sortOrder={sortOrder}
         />
-        {loading ? (
-          <p className={styles.message}>Loading...</p>
-        ) : error ? (
-          <p className={styles.message}>{error}</p>
+        {loading || error ? (
+          <div className={styles.message}>
+            {loading ? <p>Loading...</p> : <p>{error}</p>}
+          </div>
         ) : (
           <>
             {filteredSortedUsers && filteredSortedUsers.length === 0 && (
