@@ -7,7 +7,7 @@ A responsive user dashboard built with React and TypeScript.
 ### Installation
 1. Clone the repository:
 ```
-git clone https://github.com/your-username/user-dashboard.git
+git clone https://github.com/gromov-ivan/user-dashboard.git
 cd user-dashboard
 ```
 2. Install dependencies:
