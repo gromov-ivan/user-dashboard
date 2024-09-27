@@ -1,0 +1,13 @@
+.toolbar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+  input {
+    padding: 8px;
+    width: 300px;
+    border: 1px solid gray;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+}
