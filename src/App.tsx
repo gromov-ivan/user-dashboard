@@ -1,30 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import UserList from "./components/UserList/UserList";
-import useUsers from "./hooks/useUsers";
-import styles from "./App.module.scss";
 import Toolbar from "./components/Toolbar/Toolbar";
+import useUsers from "./hooks/useUsers";
+import useUserFilters from "./hooks/useUserFilters";
+import styles from "./App.module.scss";
 
 const App: React.FC = () => {
   const { users, loading, error } = useUsers();
-  const [filterText, setFilterText] = useState("");
-
-  const handleFilterChange = (text: string) => {
-    setFilterText(text);
-  };
-
-  const filteredUsers = users.filter((user) => {
-    const searchText = filterText.toLowerCase();
-    return (
-      user.name.toLowerCase().includes(searchText) ||
-      user.email.toLowerCase().includes(searchText) ||
-      user.phone.toLowerCase().includes(searchText) ||
-      user.website.toLowerCase().includes(searchText) ||
-      user.address.street.toLowerCase().includes(searchText) ||
-      user.address.suite.toLowerCase().includes(searchText) ||
-      user.address.city.toLowerCase().includes(searchText) ||
-      user.address.zipcode.toLowerCase().includes(searchText)
-    );
-  });
+  const {
+    sortField,
+    sortOrder,
+    handleFilterChange,
+    handleSortChange,
+    toggleSortOrder,
+    filteredSortedUsers,
+  } = useUserFilters(users);
 
   return (
     <div className={styles.dashboard}>
@@ -32,17 +22,23 @@ const App: React.FC = () => {
         <h1>User Dashboard</h1>
       </header>
       <main className={styles.mainContent}>
-        <Toolbar onFilterChange={handleFilterChange} />
+        <Toolbar
+          onFilterChange={handleFilterChange}
+          onSortChange={handleSortChange}
+          onToggleSortOrder={toggleSortOrder}
+          sortField={sortField}
+          sortOrder={sortOrder}
+        />
         {loading ? (
           <p className={styles.message}>Loading...</p>
         ) : error ? (
           <p className={styles.message}>{error}</p>
         ) : (
           <>
-            {filteredUsers && filteredUsers.length === 0 && (
+            {filteredSortedUsers && filteredSortedUsers.length === 0 && (
               <p className={styles.message}>No users found</p>
             )}
-            <UserList users={filteredUsers} />
+            <UserList users={filteredSortedUsers} />
           </>
         )}
       </main>
